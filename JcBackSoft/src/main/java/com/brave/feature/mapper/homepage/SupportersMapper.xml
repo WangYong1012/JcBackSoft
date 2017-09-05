@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.SupportersMapper">
+	<!-- 查询当前用户发布的出票信息 -->
+	<select id="selectSupportersAllByName" parameterType="String"
+			resultType="map">
+		SELECT * FROM supporters WHERE 1=1 and username =
+		#{Username} order by
+		issuetime desc
+	</select>
+	<!-- 筛选票源信息-->
+	<select id="screenSupportersByCondition" parameterType="String"
+			resultType="map">
+		${Sql}
+	</select>
+	<!-- 查询票源表 -->
+	<select id="selectSupportersData" resultType="map">
+		SELECT * FROM
+		supporters where
+		issuetime>=DATE_SUB(NOW(),INTERVAL 480 hour)
+		order by
+		issuetime desc
+	</select>
+	<!-- 分頁查询票源表 -->
+	<select id="selectSupportersDataByPage" parameterType="map" resultType="map">
+		SELECT * FROM supporters where issuetime>=DATE_SUB(NOW(),INTERVAL 480 hour) order by issuetime desc LIMIT
+		#{param.CurrentPage},#{param.PageSize}
+	</select>
+	<!-- 根据id查询票源信息 -->
+	<select id="selectSupportersDataById" parameterType="String"
+			resultType="map">
+		SELECT * FROM supporters WHERE supportersid =
+		#{SupportersId}
+	</select>
+	<!-- 根据背书查询票源表 -->
+	<select id="selectSupportersDataByEndorsement" parameterType="String"
+			resultType="map">
+		SELECT * FROM supporters WHERE endorsement = #{Endorsement}
+	</select>
+	<!-- 查询票源推送状态 -->
+	<select id="selectPushstatrsupportersByName" parameterType="String"
+			resultType="map">
+		select push_statr_supporters from userinfo where username =
+		#{Username}
+	</select>
+	<!-- 查询票源表中一共有多少条数据 -->
+	<select id="selectSupportersQuantity" resultType="map">
+		SELECT COUNT(*) a
+		FROM supporters WHERE
+		issuetime>=DATE_SUB(NOW(),INTERVAL 480 hour)
+	</select>
+	<!-- 根据票源类别获取票源信息 -->
+	<select id="selectSupportersByType" parameterType="String"
+			resultType="map">
+		SELECT * FROM supporters WHERE type = #{type}
+	</select>
+	<!-- 查询普通用户 -->
+	<select id="selectCommonUser" parameterType="String"
+			resultType="map">
+		SELECT * FROM userinfo WHERE state=0 and publicity=1 LIMIT #{Num}
+	</select>
+	<!-- 根据票源发布时间查询票源信息 -->
+	<!-- <select id="selectSupportersDataByIssuetime" parameterType="String"
+		resultType="map">
+		SELECT * FROM supporters WHERE issuetime =
+		#{Issuetime}
+	</select> -->
+	<!-- 根据票源发布时间查询最新票源数量 -->
+	<select id="selectSupportersAmountByIssuetime" parameterType="String"
+			resultType="int">
+		SELECT count(*)sl FROM supporters WHERE issuetime &gt;
+		#{Issuetime}
+	</select>
+
+	<!-- 查询用户是否具有发布票源权限-->
+	<select id="selectSupportersState" parameterType="String"
+			resultType="map">
+		SELECT * FROM blacklist WHERE username=#{username}
+	</select>
+	<!-- 根据页数查询票源列表-->
+	<select id="selectSupportersInfoByPage" parameterType="map"
+			resultType="map">
+		SELECT * FROM supporters ORDER BY issuetime LIMIT #{param.CurrentPage},#{param.Pagesize}
+	</select>
+
+	<!-- 向票源表中插入数据 -->
+	<insert id="insertSupportersInfo" parameterType="map">
+		Insert into
+		supporters(bankpoce,bank,type,money,duedate,endorsement,linkman,phone,remark,supportersid,username,issuetime,piaonum,zhangshu,jingdu,weidu)
+		Values(${param.Data})
+	</insert>
+
+	<!-- 修改票源表中用户的电话号码 -->
+	<update id="updateSupportersPhone" parameterType="map">
+		UPDATE
+		supporters SET phone = #{param.Phone} Where username =
+		#{param.Username}
+	</update>
+	<!-- 修改票源的经纬度 -->
+	<update id="updateSupportersTitude" parameterType="map">
+		update
+		supporters,userinfo set
+		supporters.jingdu=userinfo.longitude,supporters.weidu=userinfo.latitude
+		where userinfo.username = #{param.Username} and
+		supporters.supportersid
+		=#{param.Supportersid}
+	</update>
+	<!-- 用户的出票状态 -->
+	<update id="updateSupportersCheckOut" parameterType="map">
+	UPDATE
+	supporters SET checkedout = #{param.Checkedout} Where supportersid =
+	#{param.Supportersid}
+	</update>
+	<!-- 收藏表修改收藏状态（取消收藏） -->
+	<update id="updateSupportersCollectstateZero" parameterType="map">
+		update supporters set collectstate = 0 where username=#{param.Username}
+	</update>
+	<!-- 根据收藏表中的用户名修改用户收藏的状态(添加收藏) -->
+	<update id="updateSupportersCollectstateOne" parameterType="map">
+		update supporters set collectstate = 0 where username=#{param.Username}
+	</update>
+
+	<!-- 通过id删除票源信息 -->
+	<delete id="deleteSupportersById" parameterType="map">
+		DELETE FROM
+		supporters WHERE supportersid = #{param.SupportersId}
+	</delete>
+</mapper>

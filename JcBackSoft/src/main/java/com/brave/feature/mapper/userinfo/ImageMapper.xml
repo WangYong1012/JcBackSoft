@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.userinfo.ImageMapper">
+	<!-- FIFO先进先出,FIFO 、LRU、LFU -->
+
+	<!-- 更新用户头像信息 -->
+	<update id="updateUserinfoImage" parameterType="map" >
+	UPDATE userinfo 
+	SET photourl=#{param.Photourl}
+	WHERE username=#{param.Username}
+	</update>
+	
+</mapper>

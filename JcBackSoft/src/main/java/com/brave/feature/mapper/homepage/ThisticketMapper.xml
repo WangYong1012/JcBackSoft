@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.ThisticketMapper">
+	<!-- 查询收票信息 -->
+	<select id="selectThisticketList" parameterType="map" resultType="map">
+	SELECT 
+		ticketid,username,useridentity,now(),content,viewtimes,imageAmount,realname,issuetime,jingdu,weidu,region,(round(6378.137*2*asin(sqrt(pow(sin( (
+		#{param.Lat1}
+		*pi()/180-weidu*pi()/180)/2),2)+cos(#{param.Lat1}
+		*pi()/180)*cos(weidu*pi()/180)* pow(sin( (#{param.Log1}
+		*pi()/180-jingdu*pi()/180)/2),2)))*1000)) as juli from
+		this_ticket ORDER BY issuetime DESC LIMIT #{param.Pageindex},#{param.Pagesize}
+	</select>
+	<!-- 添加收票信息 -->
+	<insert id="insertThisticket" parameterType="map">
+	INSERT INTO this_ticket(ticketid,username,useridentity,content,viewtimes,imageAmount,issuetime,jingdu,weidu,region,realname)
+		VALUES(#{param.Ticketid},#{param.Username},#{param.Useridentity},#{param.Content},
+		#{param.Viewtimes},#{param.ImageAmount},#{param.Issuetime},#{param.Longitude},#{param.Latitude},
+		#{param.Region},#{param.Realname})
+	</insert>
+	<!-- 更新收票信息浏览次数 -->
+	<update id="updateThisticketViewtimes" parameterType="map">
+	UPDATE this_ticket SET viewtimes=#{param.Viewtimes} WHERE ticketid=#{param.Ticketid}
+	</update>
+	<!-- 查询收票信息总数 -->
+	<select id="selectThisticketAmount" resultType="int">
+	select count(*) from this_ticket
+	</select>
+</mapper>

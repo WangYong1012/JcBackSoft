@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brave.feature.mapper.news.NewsEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.brave.system.entity.NewsEntity" >
+    <id column="NewsEntity_newsid" property="newsid" jdbcType="VARCHAR" />
+    <result column="NewsEntity_issuetime" property="issuetime" jdbcType="VARCHAR" />
+    <result column="NewsEntity_content" property="content" jdbcType="VARCHAR" />
+    <result column="NewsEntity_username" property="username" jdbcType="VARCHAR" />
+    <result column="NewsEntity_author" property="author" jdbcType="VARCHAR" />
+    <result column="NewsEntity_url" property="url" jdbcType="VARCHAR" />
+    <result column="NewsEntity_title" property="title" jdbcType="VARCHAR" />
+    <result column="NewsEntity_headimage" property="headimage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    NewsEntity.newsid as NewsEntity_newsid, NewsEntity.issuetime as NewsEntity_issuetime, 
+    NewsEntity.content as NewsEntity_content, NewsEntity.username as NewsEntity_username, 
+    NewsEntity.author as NewsEntity_author, NewsEntity.url as NewsEntity_url, NewsEntity.title as NewsEntity_title, 
+    NewsEntity.headimage as NewsEntity_headimage
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.brave.system.entity.NewsEntityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from news_ad NewsEntity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from news_ad NewsEntity
+    where NewsEntity.newsid = #{newsid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from news_ad
+    where newsid = #{newsid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.brave.system.entity.NewsEntityExample" >
+    delete from news_ad NewsEntity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.brave.system.entity.NewsEntity" >
+    insert into news_ad (newsid, issuetime, content,
+      username, author, url, 
+      title, headimage)
+    values (#{newsid,jdbcType=VARCHAR}, #{issuetime,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{headimage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.brave.system.entity.NewsEntity" >
+    insert into news_ad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="newsid != null" >
+        newsid,
+      </if>
+      <if test="issuetime != null" >
+        issuetime,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="headimage != null" >
+        headimage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="newsid != null" >
+        #{newsid,jdbcType=VARCHAR},
+      </if>
+      <if test="issuetime != null" >
+        #{issuetime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="headimage != null" >
+        #{headimage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.brave.system.entity.NewsEntityExample" resultType="java.lang.Integer" >
+    select count(*) from news_ad NewsEntity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update news_ad NewsEntity
+    <set >
+      <if test="record.newsid != null" >
+        NewsEntity.newsid = #{record.newsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuetime != null" >
+        NewsEntity.issuetime = #{record.issuetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        NewsEntity.content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        NewsEntity.username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        NewsEntity.author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        NewsEntity.url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        NewsEntity.title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headimage != null" >
+        NewsEntity.headimage = #{record.headimage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update news_ad NewsEntity
+    set NewsEntity.newsid = #{record.newsid,jdbcType=VARCHAR},
+      NewsEntity.issuetime = #{record.issuetime,jdbcType=VARCHAR},
+      NewsEntity.content = #{record.content,jdbcType=VARCHAR},
+      NewsEntity.username = #{record.username,jdbcType=VARCHAR},
+      NewsEntity.author = #{record.author,jdbcType=VARCHAR},
+      NewsEntity.url = #{record.url,jdbcType=VARCHAR},
+      NewsEntity.title = #{record.title,jdbcType=VARCHAR},
+      NewsEntity.headimage = #{record.headimage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.brave.system.entity.NewsEntity" >
+    update news_ad
+    <set >
+      <if test="issuetime != null" >
+        issuetime = #{issuetime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="headimage != null" >
+        headimage = #{headimage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where newsid = #{newsid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.brave.system.entity.NewsEntity" >
+    update news_ad
+    set issuetime = #{issuetime,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      headimage = #{headimage,jdbcType=VARCHAR}
+    where newsid = #{newsid,jdbcType=VARCHAR}
+  </update>
+  <select id="getMaxNewsId" resultType="int">
+    SELECT MAX(cast(newsid as unsigned int)) FROM news_ad
+  </select>
+</mapper>

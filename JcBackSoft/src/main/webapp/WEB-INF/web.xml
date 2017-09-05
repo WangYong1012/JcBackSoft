@@ -1,0 +1,131 @@
+<web-app version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>Archetype Created Web Application</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring*.xml</param-value>
+    </context-param>
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
+    <!-- Spring Security设置 -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>springMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- 1.接收图片使用servlet请求 -->
+    <servlet>
+        <servlet-name>photoReceive</servlet-name>
+        <servlet-class>com.brave.feature.servlet.PhotoReceiveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>photoReceive</servlet-name>
+        <url-pattern>/Photojieshou</url-pattern>
+    </servlet-mapping>
+    <!-- 1.压缩图片使用servlet请求 -->
+    <servlet>
+        <servlet-name>photoReduce</servlet-name>
+        <servlet-class>com.brave.feature.servlet.PhotoReduceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>photoReduce</servlet-name>
+        <url-pattern>/Photoyasuo</url-pattern>
+    </servlet-mapping>
+
+    <!-- 上传文件 -->
+    <servlet>
+        <servlet-name>uploadFiles</servlet-name>
+        <servlet-class>com.brave.feature.servlet.UploadifyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>uploadFiles</servlet-name>
+        <url-pattern>/upload/UploadifyServlet</url-pattern>
+    </servlet-mapping>
+    <!--servlet>
+        <servlet-name>springBACK</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-back.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet -->
+
+    <servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- servlet-mapping>
+        <servlet-name>springBACK</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping -->
+
+    <!-- 遇到以下内容时，直接放行 -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.swf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.JPG</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errors/404.jsp</location>
+    </error-page>
+</web-app>

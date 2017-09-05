@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.LoanMapper">
+	<!-- 查询版本信息 -->
+	<insert id="insertLoaninfo" parameterType="map">
+	INSERT INTO corporate_loans(username,
+Trueusername,sex,idcardnum,phone,companyname,registeredcapital,registerdate,
+annualsales,borrowamount,funduse,mortgagestatus,intangibleassets,registerstatus,loantype )
+VALUES(#{param.Username},#{param.Trueusername},#{param.Sex},#{param.Idcardnum},#{param.Phone},
+#{param.Companyname},#{param.Registeredcapital},#{param.Registerdate},#{param.Annualsales},#{param.Borrowamount},
+#{param.Funduse},#{param.Mortgagestatus},#{param.Intangibleassets},#{param.Registerstatus},#{param.Loantype})
+	</insert>
+	<!-- 查询贷款机构信息 -->
+	<select id="selectLenderList" parameterType="map" resultType="map">
+	SELECT id,lendername,photourl,loanvalue,entrydate,description FROM lender ORDER BY entrydate DESC LIMIT #{param.Pageindex},#{param.Pagesize}
+	</select>
+</mapper>

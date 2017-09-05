@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.userinfo.UserinfoMapper">
+	<!-- FIFO先进先出,FIFO 、LRU、LFU -->
+	<!--<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+	 --><!--查询用户的信息 -->
+	<select id="selectMyDataInfo" parameterType="map" resultType="map">
+		SELECT * FROM userinfo WHERE username = #{param.Username}
+	</select>
+	<!-- 根据环信id查询用户信息 -->
+	<select id="selectUserDataInfoByHxid" parameterType="String"
+			resultType="map">
+		SELECT DISTINCT
+		username,phone,Companyaddress,Companyname,area,Trueusername,longitude,latitude,userexplain,sex
+		FROM userinfo WHERE hxid = #{HuanxinId} LIMIT 1
+	</select>
+	<select id="selectSignLiST" resultType="map">
+		SELECT * FROM ( SELECT
+		IFNULL((TO_DAYS(NOW()) - TO_DAYS(qiandaotime)), 0) AS
+		num, username
+		FROM userinfo ) o WHERE o.num > 1
+	</select>
+	<!-- 查询用户的积分 -->
+	<select id="selectUserScore" parameterType="map" resultType="map">
+		SELECT score FROM userinfo WHERE username = #{param.Username}
+	</select>
+	<!-- 查询用户的积分 -->
+	<select id="selectUserScoreByTrueName" parameterType="string" resultType="map">
+		SELECT score FROM userinfo WHERE Trueusername = #{TrueName}
+	</select>
+	<!-- 查询安卓用户的channelid -->
+	<select id="selectUserChannelidByAd" resultType="map">
+		SELECT channelid
+		FROM userinfo WHERE state = 1 and terminalstate = 3
+	</select>
+	<!-- 查询ios用户的channelid -->
+	<select id="selectUserChannelidByIos" resultType="map">
+		SELECT
+		channelid FROM userinfo WHERE state = 1 and terminalstate = 4
+	</select>
+	<!-- 添加手机联系人 -->
+	<select id="SelectPhoneUsername" parameterType="String"
+			resultType="map">
+		SELECT phone FROM userinfo WHERE phone in (${Data})
+	</select>
+	<!-- 查询用户与手机号之间的状态关系 -->
+	<select id="selectPhoneStateByUsername" parameterType="map"
+			resultType="map">
+		select friendphone,friendstatr from friend where username =
+		#{param.Username}
+		union all Select userphone,friendstatr from friend
+		where friendusername =
+		#{param.Username}
+	</select>
+	<!-- 判断用户的手机号是否存在 -->
+	<select id="selectUserinfoByPhone" parameterType="String"
+			resultType="map">
+		SELECT phone FROM userinfo WHERE phone = #{Phone}
+	</select>
+	<!-- 批量获取用户信息 -->
+	<select id="selectBatchdataByHxid" parameterType="String"
+			resultType="map">
+		SELECT DISTINCT
+		hxid,area,Trueusername,longitude,latitude,phone,sex,authenticationStatus,username,useridentity FROM
+		userinfo WHERE
+		hxid IN(${Hxid})
+	</select>
+	<!-- 查询没有通过审核的用户信息 -->
+	<select id="selectRegisterstateIsOne" resultType="map">
+		SELECT * FROM
+		userinfo WHERE registerstate = 1
+	</select>
+	<!-- 根据环信id获取用户信息 -->
+	<select id="selectUserDataByHxid" parameterType="String"
+			resultType="map">
+		SELECT DISTINCT
+		username,phone,Companyaddress,Companyname,area,Trueusername,longitude,latitude,userexplain,sex
+		FROM userinfo WHERE hxid = #{Huanxinid} LIMIT 1
+	</select>
+	<!-- 根据用户的电话号码查询用户地区 -->
+	<select id="SelectUserinfoAreaPhone" parameterType="String"
+			resultType="map">
+		SELECT area FROM userinfo where phone = #{Phone} or
+		username = #{Phone}
+	</select>
+	<!-- 查询用户的经纬度信息 -->
+	<select id="selectTitudeAll" resultType="map">
+		SELECT
+		latitude,longitude,username,photourl,area FROM userinfo
+	</select>
+	<!-- 当天是否已经进行签到的LIst -->
+	<select id="selectCurrentDateList" parameterType="map"
+			resultType="map">
+		SELECT days,score FROM userinfo WHERE username =
+		#{param.Username} AND
+		STR_TO_DATE(qiandaotime,'%Y-%m-%d') =
+		#{param.Qiandaotime}
+	</select>
+	<!-- 根据用户名查询用户的签到天数和积分 -->
+	<select id="selectUserScoreOrDayByName" parameterType="map"
+			resultType="map">
+		SELECT days,score FROM userinfo WHERE username =
+		#{param.Username}
+	</select>
+	<!-- 根据用户名查询签到时间 -->
+	<select id="selectUserQiandaotimeByName" parameterType="map"
+			resultType="map">
+		SELECT qiandaotime FROM userinfo WHERE username =
+		#{param.Username}
+	</select>
+	<!-- 判断是否连续签到 -->
+	<select id="decideContinuous" parameterType="map" resultType="map">
+		SELECT (TO_DAYS(NOW()) - TO_DAYS(qiandaotime)) AS num FROM userinfo
+		WHERE
+		username = #{param.Username}
+	</select>
+	<!-- 管理员查看所有用户资料 -->
+	<select id="selectAllUserinfo" resultType="map">
+		SELECT
+		username,registerdate,Trueusername,phone,sex,Companyaddress,Companyname,state,loginleftdate,operationdate,terminalstate
+		FROM userinfo ORDER BY registerdate DESC
+	</select>
+	<!-- 根据用户名查询用户的状态 -->
+	<select id="selectUserStateByusername" parameterType="String"
+			resultType="map">
+		Select state FROM userinfo WHERE username = #{Username}
+	</select>
+	<!-- 查询用户的积分和签到天数 -->
+	<select id="selectUserTimeScoreOrDayByName" parameterType="String"
+			resultType="map">
+		SELECT qiandaotime,days,score,sumdays FROM userinfo WHERE
+		username =
+		#{Username}
+	</select>
+	<!-- 判断是否连续签到 -->
+	<select id="decideContinueSign" parameterType="String"
+			resultType="map">
+		SELECT (TO_DAYS(NOW()) - TO_DAYS(qiandaotime)) AS num FROM
+		userinfo WHERE
+		username = #{Username}
+	</select>
+	<!-- 获取安卓用户的channelid -->
+	<select id="selectUserChannelIdByAd1" parameterType="String"
+			resultType="map">
+		Select channelid from userinfo where channelid!=
+		#{ChannelId}
+		and terminalstate = 3 and push_statr_supporters = 1
+	</select>
+	<!-- 获取安卓用户的channelid -->
+	<select id="selectUserChannelIdByAd2" resultType="map">
+		Select
+		channelid from userinfo where terminalstate = 3 and
+		push_statr_supporters = 1
+	</select>
+	<!-- 获取ios用户的channelid -->
+	<select id="selectUserChannelIdByIos1" parameterType="String"
+			resultType="map">
+		Select channelid ,push_music from userinfo where
+		channelid!= #{ChannelId}
+		and terminalstate = 4 and
+		push_statr_supporters = 1
+	</select>
+	<!-- 获取ios用户的channelid -->
+	<select id="selectUserChannelIdByIos2" resultType="map">
+		Select
+		channelid,push_music from userinfo where terminalstate = 4 and
+		push_statr_supporters = 1
+	</select>
+	<!-- 根据经纬度计算距离 -->
+	<select id="selectUserinfoJuliByLatitudeAndLongitude"
+			parameterType="map" resultType="map">
+		select
+		username,(round(6378.137*2*asin(sqrt(pow(sin( (
+		#{param.Lat1}
+		*pi()/180-latitude*pi()/180)/2),2)+cos(#{param.Lat1}
+		*pi()/180)*cos(latitude*pi()/180)* pow(sin( (#{param.Log1}
+		*pi()/180-longitude*pi()/180)/2),2)))*1000)) as juli,username from
+		userinfo ORDER BY juli DESC
+	</select>
+	<select id="selectUserinfoGrouptimeByName"
+			parameterType="String" resultType="map">
+		SELECT grouptime FROM userinfo WHERE Trueusername = #{Name}
+	</select>
+	<!-- 查询用户认证状态 -->
+	<select id="selectAuthenticationStatusList" resultType="map">
+		SELECT username,authenticationStatus FROM userinfo WHERE authenticationStatus IN('1','2')
+	</select>
+	<!-- 查询所有管理员的信息 -->
+	<select id="selectAdminInfo" resultType="map">
+		SELECT username FriendUsername,phone Friendphone FROM userinfo WHERE state = '1'
+	</select>
+	<!-- 根据用户名查询分享信息  -->
+	<select id="selectShareInfoByUsername" resultType="map" parameterType="string">
+		SELECT totalSharetimes,sharetimes,IFNULL((TO_DAYS(NOW()) - TO_DAYS(lastSharetime)), 0) AS lastSharetime FROM userinfo WHERE username=#{username}
+	</select>
+
+	<select id="selectLastShareInfoByUsername" resultType="map" parameterType="string">
+		SELECT lastSharetime,sharetimes,(TO_DAYS(NOW()) - TO_DAYS(lastSharetime)) AS lastSharetime FROM userinfo WHERE username=#{username}
+	</select>
+
+	<!-- 注册用户 -->
+	<insert id="insertUserInfo" parameterType="map">
+		INSERT INTO
+		userinfo(username,password,id,state,sex,phone,registerstate,companyaddress,companyname,trueusername,registerdate,userexplain,publicity,channelid,hxid,useridentity)
+		VALUES(#{param.Username},#{param.Password},#{param.Id},#{param.State},#{param.Sex},#{param.Phone},#{param.Registerstate},#{param.Companyaddress},#{param.Companyname},#{param.Trueusername},
+		#{param.Registerdate},#{param.Userexplain},#{param.Publicity},#{param.ChannelId},#{param.Hxid},#{param.Useridentity})
+	</insert>
+
+	<!-- 更改用户的签到天数-->
+	<update id="updateUserinfoDays" parameterType="map">
+		UPDATE userinfo
+		SET days = #{param.Days} Where
+		username = #{param.Username}
+	</update>
+	<!-- 安卓端登录更新 -->
+	<update id="updateUserByVersionAndPlatAndroid" parameterType="map">
+		update userinfo set adver=#{param.ADVER}, PLAT=#{param.PLAT} where
+		USERNAME=#{param.USERNAME}
+	</update>
+	<!-- IOS端登录更新 -->
+	<update id="updateUserByVersionAndPlatIOS" parameterType="map">
+		update
+		userinfo set iosver=#{param.ADVER}, PLAT=#{param.PLAT} where
+		USERNAME=#{param.USERNAME}
+	</update>
+	<!-- 更改用户的CHANNELID -->
+	<update id="updateUserChannelIdByUserName" parameterType="map">
+		update
+		userinfo set channelid=#{param.CHANNELID}
+		,terminalstate=#{param.TERMINALSTATE}
+		where username=#{param.USERNAME}
+	</update>
+	<!-- 更改用户的最后离开时间 -->
+	<update id="UpdateUserLogindate" parameterType="map">
+		UPDATE userinfo
+		SET loginleftdate = #{param.Loginleftdate} WHERE
+		username=#{param.Username}
+	</update>
+	<!-- 更改用户的积分-->
+	<update id="updateUserinfoScoreByusername" parameterType="map">
+		UPDATE
+		userinfo SET score=#{param.Score} Where
+		username = #{param.Username}
+	</update>
+	<!-- 修改用户的密码 -->
+	<update id="updateUserinfoPassword" parameterType="map">
+		UPDATE
+		userinfo SET password = #{param.Password} Where username =
+		#{param.Username}
+	</update>
+	<!-- 通过电话号码修改用户的密码 -->
+	<update id="updateUserinfoPasswordByPhone" parameterType="map">
+		UPDATE
+		userinfo SET password = #{param.Password} Where phone = #{param.Phone}
+	</update>
+	<!-- 修改用户的经纬度 -->
+	<update id="updateUserinfoLatitudeAndLongitude" parameterType="map">
+		update userinfo set longitude = #{param.Longitude},latitude=
+		#{param.Latitude},area=#{param.Area} where username=#{param.Username}
+	</update>
+	<!-- 更改ios用户的版本信息 -->
+	<update id="updateUserinfoIosver" parameterType="map">
+		UPDATE
+		userinfo
+		SET
+		iosver = #{param.Iosver} Where hxid = #{param.Hxid}
+	</update>
+	<!-- 更改安卓用户的版本信息 -->
+	<update id="updateUserinfoAdver" parameterType="map">
+		UPDATE
+		userinfo
+		SET
+		adver = #{param.Adver} Where hxid = #{param.Hxid}
+	</update>
+	<!-- 插入最后操作时间 -->
+	<update id="updateUserinfoOperationdate" parameterType="map">
+		UPDATE
+		userinfo SET operationdate = #{param.Operationdate} where username =
+		#{param.Username}
+	</update>
+	<!-- 修改用户的资料 -->
+	<update id="updateUserinfo" parameterType="map">
+		UPDATE userinfo SET
+		password = #{param.Password},sex = #{param.Sex},phone =
+		#{param.Phone},companyaddress =
+		#{param.Companyaddress},companyname=#{param.Companyname},trueusername
+		=
+		#{param.Truename},userexplain =
+		#{param.Userexplain},publicity=#{param.Publicity}
+		Where username =
+		#{param.Username}
+	</update>
+	<!-- 通过id将通过审核用户的时间插入到表中 -->
+	<update id="updateUserinfoCheckdateById" parameterType="map">
+		UPDATE
+		userinfo SET checkdate = #{param.Checkdate} WHERE id = #{param.Id}
+	</update>
+	<!-- 通过id将当前用户更改为通过审核状态 -->
+	<update id="updateUserinfoRegisterstateById" parameterType="map">
+		UPDATE userinfo SET registerstate = 0 WHERE id = #{param.Id}
+	</update>
+	<!-- 更改用户的签到天数和签到时间 -->
+	<update id="updateUserinfoDaysByusername" parameterType="map">
+		UPDATE
+		userinfo SET days = #{param.Days} ,
+		qiandaotime=#{param.Qiandaotime},score=#{param.Score},sumdays=#{param.Sumdays}
+		Where username = #{param.Username}
+	</update>
+	<!-- 更改用户的推送 ios有声音-->
+	<update id="updateUserinfoPushmusicOne" parameterType="map">
+		UPDATE
+		userinfo SET push_music = 1 Where channelid = #{param.Channelid}
+	</update>
+	<!-- 更改用户的推送 ios有声音-->
+	<update id="updateUserinfoPushmusicZero" parameterType="map">
+		UPDATE
+		userinfo SET push_music = 0 Where channelid = #{param.Channelid}
+	</update>
+	<!-- 开启票源推送 -->
+	<update id="updatePushStatrSupportersOne" parameterType="map">
+		UPDATE
+		userinfo SET push_statr_supporters = 1 Where channelid =
+		#{param.Channelid}
+	</update>
+	<!-- 关闭票源推送 -->
+	<update id="updatePushStatrSupportersZero" parameterType="map">
+		UPDATE
+		userinfo SET push_statr_supporters = 0 Where channelid =
+		#{param.Channelid}
+	</update>
+	<!-- 修改用户的设备号 -->
+	<update id="updateUserinfoTerminalstateByusername"
+			parameterType="map">
+		UPDATE userinfo SET push_statr_supporters =
+		#{param.Supporters},push_start_invoice = #{param.Supporters},
+		terminalstate =
+		#{param.Terminalstate}
+		WHERE username =
+		#{param.Username} or channelid =
+		#{param.Channelid}
+	</update>
+	<!-- 修改用户的Channelid-->
+	<update id="updateUserinfoChannelIdByusername" parameterType="map">
+		UPDATE userinfo SET channelid = #{param.Channelid} WHERE username =
+		#{param.Username}
+	</update>
+	<!-- 更改用户的积分-->
+	<update id="updateUserinfoScoreByGroupTrueusername"
+			parameterType="map">
+		UPDATE
+		userinfo SET score=#{param.Score},grouptime=#{param.Grouptime}
+		Where
+		trueusername = #{param.Trueusername}
+	</update>
+	<!-- 更改用户的分享信息-->
+	<update id="updateShareInfoByUsername"
+			parameterType="map">
+		UPDATE
+		userinfo SET totalSharetimes=#{param.TotalSharetimes},sharetimes=#{param.Sharetimes},lastSharetime=#{param.LastSharetime}
+		Where
+		username = #{param.Username}
+	</update>
+
+	<!-- 根据用户的账号删除用户的信息 -->
+	<delete id="deleteUserinfoByUsername" parameterType="map">
+		DELETE FROM
+		userinfo WHERE username = #{param.Username}
+	</delete>
+	<!-- 通过id删除用户 -->
+	<delete id="deleteUserinfoById" parameterType="map">
+		DELETE FROM
+		userinfo WHERE id = #{param.Id}
+	</delete>
+	<update id="updateUserAuthenticationStatusByUsername" parameterType="string">
+		UPDATE userinfo u SET 
+		u.authenticationStatus = '1' 
+		WHERE u.username = #{UserName}
+	</update>
+</mapper>

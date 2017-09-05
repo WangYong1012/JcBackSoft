@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.black.BlacklistMapper">
+	<!-- 根据用户名查询收藏表中的信息(我的选项卡中) -->
+	<insert id="insertBlacklist" parameterType="string">
+	 INSERT INTO blacklist VALUES(#{username},'2')
+	</insert>
+
+	<!-- 根据登录时输入id对收藏表进行删除操作 -->
+	<delete id="deleteBlacklistByUsername" parameterType="string">
+		DELETE FROM blacklist WHERE username= #{username}
+	</delete>
+</mapper>

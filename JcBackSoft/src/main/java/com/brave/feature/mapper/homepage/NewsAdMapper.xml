@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.NewsAdMapper">
+	<!-- 查询新闻信息 -->
+	<select id="selectNewsList" parameterType="map" resultType="map">
+	SELECT title,newsid,issuetime,author,headimage FROM news_ad ORDER BY issuetime DESC LIMIT #{param.Pageindex},#{param.Pagesize}
+	</select>
+	<!-- 根据新闻id查询新闻信息 -->
+	<select id="selectNewsByID" parameterType="string" resultType="map">
+	SELECT * FROM news_ad WHERE newsid=#{id}
+	</select>
+	
+	<!-- 添加新闻信息 -->
+	<insert id="insertNews" parameterType="map">
+	INSERT INTO news_ad(newsid,username,content,issuetime,author)
+		VALUES(#{param.Newsid},#{param.Username},#{param.Content},
+		#{param.Issuetime},#{param.Author})
+	</insert>
+	<!-- 查询新闻信息总数 -->
+	<select id="selectNewsAmount" resultType="int">
+	SELECT count(*) FROM news_ad
+	</select>
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.company.CompanyMapper">
+	<!-- 动态查询城市 -->
+	<select id="selectCompanyCity" resultType="map">
+		SELECT DISTINCT
+		province,GROUP_CONCAT(DISTINCT city ORDER BY city='济南市'
+		DESC) city FROM
+		company GROUP BY province
+	</select>
+	<!-- 查询城市点击数 -->
+	<select id="selectCompanyByCity" resultType="map">
+		SELECT * FROM (SELECT b.city FROM company b) a GROUP BY a.city
+	</select>
+	<!-- 获取指定城市的点击数 -->
+	<select id="selectCompanyCountByCity" parameterType="String"
+		resultType="map">
+		SELECT purchasemount FROM company WHERE city = #{City}
+	</select>
+	<!-- 获取企业的点击次数 -->
+	<select id="selectMountCompany" parameterType="map" resultType="map">
+		SELECT purchasemount FROM company WHERE companyid = #{param.Companyid}
+	</select>
+	<!-- 获取查看过的企业 -->
+	<select id="selectRelationCompany" parameterType="map"
+		resultType="map">
+		SELECT * FROM relation_company WHERE username =
+		#{param.Username}
+		AND companyid = #{param.CompanyId}
+	</select>
+	<!-- 查看该城市中查看过得企业信息 -->
+	<select id="selectRelationCompanyByCity" parameterType="map"
+		resultType="map">
+	SELECT companyid FROM relation_company WHERE username = #{param.Username}
+	 and city = #{param.City} ORDER BY companyid DESC
+	</select>
+	<!-- 查询该城市中的企业数量 -->
+	<select id="selectCompanyNumByCity" parameterType="String"
+		resultType="map">
+	SELECT COUNT(*) num FROM company WHERE city = #{City}
+	</select>
+	<!-- 分页获取指定城市中的企业信息 -->
+	<select id="selectCompanyDataByPage" parameterType="map" resultType="map">
+	SELECT * FROM company  WHERE city = #{param.City} 
+	ORDER BY companyid DESC LIMIT #{param.StartRow},#{param.Pagesize}
+	</select>
+	<!-- 根据企业id获取企业信息 -->
+	<select id="selectCompanyById" parameterType="map" resultType="map">
+		SELECT * FROM company WHERE companyId = #{param.CompanyId}
+	</select>
+	<!-- 错误信息 -->
+	<insert id="insertErrorInfo" parameterType="map">
+		Insert INTO errorinfo(username,retime)VALUES( #{param.UserName}, #{param.ReTime})
+	</insert>
+	<!-- 添加用户关注过的企业 -->
+	<insert id="insertRelationCompany" parameterType="map">
+		insert INTO
+		relation_company(username,companyid,attentiontime,city)VALUES(
+		#{param.Username},
+		#{param.Companyid},
+		#{param.AttentionTime},
+		#{param.City})
+	</insert>
+	<!-- 更改企业的关注量 -->
+	<update id="updateCompanyPurchaseMount" parameterType="map">
+		UPDATE
+		company SET purchasemount = #{param.PurchaseMount}
+		where companyid =
+		#{param.Companyid}
+	</update>
+</mapper>

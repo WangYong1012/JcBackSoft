@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.SendNoteMapper">
+	<!-- 查询发送短信表中的数据 -->
+	<select id="selectSendNote" parameterType="map" resultType="map">
+	SELECT * FROM sendnote WHERE username = #{param.Username}
+	 AND phone = #{param.Phone} AND (TO_DAYS(NOW())- TO_DAYS(sendtime)) &lt; 1
+	</select>
+	
+	<!-- 添加发送手机短信信息 -->
+	<insert id="insertSendnote" parameterType="map">
+		Insert into sendnote(username,phone,sendtime) VALUES
+		(#{param.Username},#{param.Phone},#{param.Sendtime})
+	</insert>
+	
+</mapper>

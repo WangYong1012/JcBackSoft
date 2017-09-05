@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.FriendMapper">
+	<!-- 查询好友信息 -->
+	<select id="selectFriendState" parameterType="map" resultType="map">
+	select * from friend where (userphone = #{param.Userphone} and friendphone = #{param.Friendphone}) or (userphone =
+	#{param.Friendphone} and friendphone = #{param.Userphone})
+	</select>
+	<!-- 根据用户名查询好友信息 -->
+	<select id="selectFriendByUsername" parameterType="String" resultType="map">
+	select * from friend where username = #{username}
+	</select>
+	
+	<!-- 添加好友信息 -->
+	<insert id="insertFriend" parameterType="map">
+		insert INTO
+		friend(username,userphone,friendusername,friendphone,friendstatr)VALUES(
+		#{param.Username},
+		#{param.Userphone},
+		#{param.FriendUsername},
+		#{param.Friendphone},
+		#{param.Friendstatr})
+	</insert>
+	
+	<!-- 建立还有关系 -->
+	<update id="updateFriend" parameterType="map">
+		UPDATE friend SET friendstatr = 1 WHERE username=#{param.Username} and
+		friendusername = #{param.FriendUsername}
+	</update>
+	
+	<!-- 删除好友信息 -->
+	<delete id="deleteFriend" parameterType="map">
+		DELETE FROM friend
+		WHERE username= #{param.Username} and friendusername = #{param.FriendUsername}
+	</delete>
+</mapper>

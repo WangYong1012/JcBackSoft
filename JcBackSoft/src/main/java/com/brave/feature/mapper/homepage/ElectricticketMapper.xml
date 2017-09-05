@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.ElectricticketMapper">
+
+	<!-- 查询收票信息 -->
+	<select id="selectElectricTicketContent" resultType="map">
+		SELECT content,url FROM electric_ticket
+	</select>
+</mapper>

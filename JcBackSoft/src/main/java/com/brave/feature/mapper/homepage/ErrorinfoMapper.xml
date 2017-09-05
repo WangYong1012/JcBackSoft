@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.ErrorinfoMapper">
+	<!-- 错误信息 -->
+	<insert id="insertErrorInfo" parameterType="map">
+		Insert INTO
+		errorinfo(username,retime)VALUES(
+		#{param.UserName},
+		#{param.ReTime})
+	</insert>
+	<!-- 更改错误信息 -->
+	<update id="updateErrorInfo" parameterType="map">
+		UPDATE errorinfo SET codestatus = #{param.CodeStatus},errortime = #{param.ErrorTime}
+		where username = #{param.UserName}
+	</update>
+</mapper>

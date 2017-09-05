@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.group.GroupinfoMapper">
+	<!-- 根据群组id查询群组信息 -->
+	<select id="selectGroupinfoData" parameterType="string" resultType="map">
+	SELECT * FROM groupinfo where groupid = #{Groupid}
+	</select>
+	<!-- 根据群主查询群组 -->
+	<select id="SelectGroupinfoByMaster" parameterType="string" resultType="map">
+	SELECT * FROM groupinfo where groupmaster = #{GroupMaster}
+	</select>
+	<!-- 根据id查询群组公告信息 -->
+	<select id="selectGroupinfoSummaryById" parameterType="string" resultType="map">
+	SELECT summary FROM groupinfo where groupid = #{Groupid}
+	</select>
+	<!-- 根据id查询群规信息 -->
+	<select id="selectGroupinfoRuleById" parameterType="string" resultType="map">
+	SELECT rule FROM groupinfo where groupid = #{Groupid}
+	</select>
+	<!-- 查询群组的所有信息 -->
+	<select id="SelectGroupinfo" resultType="map">
+	SELECT * FROM groupinfo
+	</select>
+	<!-- 查询群组的所有id和省份信息 -->
+	<select id="SelectGroupinfoIdAndProvince" resultType="map">
+		SELECT groupid,province FROM groupinfo
+	</select>
+
+	<!-- 向群组表中插入信息 -->
+	<insert id="insertGroupinfo" parameterType="map">
+	Insert into groupinfo VALUES(#{param.Groupid},
+	#{param.Summary},
+	#{param.Rule},
+	#{param.Groupmaster},#{param.Province})
+	</insert>
+
+	<!-- 更改群组信息 -->
+	<update id="updateGroupinfoDataById" parameterType="map">
+	UPDATE groupinfo SET summary = #{param.Summary} ,rule = #{param.Rule} Where groupid = #{param.Groupid}
+	</update>
+	<!-- 根据群组id修改群规 -->
+	<update id="updateGroupinfoRule" parameterType="map">
+	UPDATE groupinfo SET rule = #{param.Rule} where groupid = #{param.Groupid}
+	</update>
+	<!-- 根据群组id修改群组公告 -->
+	<update id="updateGroupinfoSummary" parameterType="map">
+	UPDATE groupinfo SET summary = #{param.Summary} where groupid = #{param.Groupid}
+	</update>
+
+	<!-- 根据群组id删除群组信息 -->
+	<delete id="deleteGroupinfoById" parameterType="map">
+		delete from groupinfo where groupid = #{param.Groupid} 
+	</delete>
+</mapper>

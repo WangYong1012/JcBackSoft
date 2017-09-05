@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.SuggestMapper">
+	<!-- 查询我的建议表中的所有数据 -->
+	<select id="selectSuggest" resultType="map">
+	SELECT * FROM suggest order by issuetime desc
+	</select>
+	
+	<!-- 新增建议 -->
+	<insert id="insertSuggest" parameterType="map">
+	Insert into suggest(username,suggest,issuetime,suggestid,phone,dealstate)VALUES(
+	#{param.Username},
+	#{param.Suggest},
+	#{param.Issuetime},
+	#{param.SuggestId},
+	#{param.Phone},
+	#{param.DealState}
+	)
+	</insert>
+	
+	<!-- 通过id修改建议状态 -->
+	<update id="updateSuggestById" parameterType="map">
+	UPDATE suggest SET dealstate = 1 WHERE suggestid = #{param.SuggestId}
+	</update>
+	
+	
+	<!-- 通过id删除建议信息 -->
+	<delete id="deleteSuggestById" parameterType="map">
+	DELETE FROM suggest WHERE suggestid = #{param.SuggestId}
+	</delete>
+</mapper>

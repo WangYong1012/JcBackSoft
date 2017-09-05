@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.homepage.FirsthandResourcesMapper">
+
+	<!-- 查询一手资源信息 -->
+	<select id="selectFirsthandResourcesList" parameterType="map" resultType="map">
+		SELECT u.username,u.useridentity,u.Companyname,u.Trueusername,u.photourl,(ROUND(6378.137*2*ASIN(SQRT(POW(SIN( (
+		#{param.Latitude}
+		*PI()/180-latitude*PI()/180)/2),2)+COS(#{param.Latitude}
+		*PI()/180)*COS(latitude*PI()/180)* POW(SIN( (#{param.Longitude}
+		*PI()/180-longitude*PI()/180)/2),2)))*1000)) as juli,u.longitude,u.latitude,u.userexplain,a.duedate,a.type from userinfo u,
+		authentication a WHERE
+		u.username=a.username AND #{param.Now} BETWEEN a.startdate AND a.duedate AND u.authenticationStatus in ('1', '2')
+		<if test="param.Region!=''">
+			AND a.region like #{param.Region}
+		</if>
+		<if test="param.Type!=''">
+			AND	a.type=#{param.Type}
+		</if>
+		ORDER BY juli LIMIT #{param.Pageindex},#{param.Pagesize}
+	</select>
+	<!-- 根据用户名查询一手资源信息 -->
+	<select id="selectFirsthandByUsername" parameterType="string" resultType="map">
+	SELECT * FROM userinfo WHERE username=#{username}
+	</select>
+	<!-- 查询用户认证状态 -->
+	<select id="selectAuthenticationStatus" parameterType="String" resultType="map">
+	SELECT authenticationStatus status FROM userinfo WHERE username=#{username}
+	</select>
+	<!-- 根据用户名查询用户认证信息 -->
+	<select id="selectAuthenticationInfo" parameterType="String" resultType="map">
+	SELECT * FROM authentication WHERE username=#{username} ORDER BY duedate DESC
+	</select>
+	<!-- 查询用户认证类型列表 -->
+	<select id="selectAuthenticationType" resultType="map">
+	SELECT typename FROM authentication_type
+	</select>
+	<!-- 根据用户名查询用户认证类型 -->
+	<select id="selectAuthenticationTypeByUsername" parameterType="String" resultType="map">
+	SELECT type FROM authentication WHERE username=#{username} AND NOW() BETWEEN startdate AND duedate
+	</select>
+	<!-- 插入用户表认证信息-->
+	<insert id="insert_firsthand" parameterType="map">
+		INSERT INTO authentication(username,startdate,duedate,type,region,payType)
+		VALUES(#{param.Username},#{param.StartDate},#{param.DueDate},#{param.Type},#{param.Region},#{param.PayType})
+	</insert>
+
+	<!-- 更新认证过期用户认证状态 -->
+	<update id="updateAuthenticationStatus" parameterType="string">
+	UPDATE userinfo SET authenticationStatus='3' WHERE #{Now} &gt;authenticationDueDate AND authenticationStatus NOT IN('1')
+	</update>
+	<!-- 更新用户认证状态 -->
+	<update id="update_firsthand_status" parameterType="map">
+	UPDATE userinfo SET authenticationStatus=#{param.Status} WHERE username = #{param.Username}
+	</update>
+</mapper>

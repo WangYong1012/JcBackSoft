@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="      
+	http://www.springframework.org/schema/beans      
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/tx      
+	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/context      
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop      
+	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+	<!-- 需要读取的配置文件路径及名称 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:component-scan base-package="com.brave" />
+
+
+	<bean id="jobsUtil" class="com.brave.system.util.JobsUtil" />
+	<!--	 配置定时器 -->
+	<bean id="resetDaysCron" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="jobsUtil" />
+		</property>
+		<!-- 要执行的方法名称 -->
+		<property name="targetMethod">
+			<value>doResetDays</value>
+		</property>
+	</bean>
+	<!--触发器  -->
+	<bean id="resetDaysCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 指向我们的任务 -->
+		<property name="jobDetail" ref="resetDaysCron"></property>
+		<!--指定执行的时间 -->
+		<property name="cronExpression" value="0 50 23 ? * *"></property>
+	</bean>
+	<!--调度器  -->
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="resetDaysCronTrigger" />
+			</list>
+		</property>
+	</bean>
+
+
+</beans>

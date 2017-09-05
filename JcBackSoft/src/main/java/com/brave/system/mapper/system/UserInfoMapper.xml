@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brave.system.mapper.system.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.brave.system.entity.UserInfo" >
+    <id column="UserInfo_id" property="id" jdbcType="VARCHAR" />
+    <id column="UserInfo_username" property="username" jdbcType="VARCHAR" />
+    <result column="UserInfo_hxid" property="hxid" jdbcType="VARCHAR" />
+    <result column="UserInfo_password" property="password" jdbcType="VARCHAR" />
+    <result column="UserInfo_state" property="state" jdbcType="VARCHAR" />
+    <result column="UserInfo_sex" property="sex" jdbcType="VARCHAR" />
+    <result column="UserInfo_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="UserInfo_registerstate" property="registerstate" jdbcType="VARCHAR" />
+    <result column="UserInfo_Companyaddress" property="companyaddress" jdbcType="VARCHAR" />
+    <result column="UserInfo_Companyname" property="companyname" jdbcType="VARCHAR" />
+    <result column="UserInfo_Trueusername" property="trueusername" jdbcType="VARCHAR" />
+    <result column="UserInfo_registerdate" property="registerdate" jdbcType="VARCHAR" />
+    <result column="UserInfo_loginleftdate" property="loginleftdate" jdbcType="VARCHAR" />
+    <result column="UserInfo_checkdate" property="checkdate" jdbcType="VARCHAR" />
+    <result column="UserInfo_operationdate" property="operationdate" jdbcType="VARCHAR" />
+    <result column="UserInfo_channelid" property="channelid" jdbcType="VARCHAR" />
+    <result column="UserInfo_longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="UserInfo_latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="UserInfo_terminalstate" property="terminalstate" jdbcType="VARCHAR" />
+    <result column="UserInfo_push_statr_supporters" property="pushStatrSupporters" jdbcType="VARCHAR" />
+    <result column="UserInfo_push_music" property="pushMusic" jdbcType="VARCHAR" />
+    <result column="UserInfo_push_start_invoice" property="pushStartInvoice" jdbcType="VARCHAR" />
+    <result column="UserInfo_days" property="days" jdbcType="VARCHAR" />
+    <result column="UserInfo_qiandaotime" property="qiandaotime" jdbcType="VARCHAR" />
+    <result column="UserInfo_userexplain" property="userexplain" jdbcType="VARCHAR" />
+    <result column="UserInfo_photourl" property="photourl" jdbcType="VARCHAR" />
+    <result column="UserInfo_publicity" property="publicity" jdbcType="VARCHAR" />
+    <result column="UserInfo_area" property="area" jdbcType="VARCHAR" />
+    <result column="UserInfo_adver" property="adver" jdbcType="VARCHAR" />
+    <result column="UserInfo_iosver" property="iosver" jdbcType="VARCHAR" />
+    <result column="UserInfo_plat" property="plat" jdbcType="VARCHAR" />
+    <result column="UserInfo_score" property="score" jdbcType="VARCHAR" />
+    <result column="UserInfo_sumdays" property="sumdays" jdbcType="VARCHAR" />
+    <result column="UserInfo_sharenum" property="sharenum" jdbcType="VARCHAR" />
+    <result column="UserInfo_sharetime" property="sharetime" jdbcType="VARCHAR" />
+    <result column="UserInfo_grouptime" property="grouptime" jdbcType="VARCHAR" />
+    <result column="UserInfo_authenticationStatus" property="authenticationstatus" jdbcType="VARCHAR" />
+    <result column="UserInfo_useridentity" property="useridentity" jdbcType="VARCHAR" />
+    <result column="UserInfo_totalSharetimes" property="totalsharetimes" jdbcType="VARCHAR" />
+    <result column="UserInfo_sharetimes" property="sharetimes" jdbcType="VARCHAR" />
+    <result column="UserInfo_lastSharetime" property="lastsharetime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UserInfo.id as UserInfo_id, UserInfo.username as UserInfo_username, UserInfo.hxid as UserInfo_hxid, 
+    UserInfo.password as UserInfo_password, UserInfo.state as UserInfo_state, UserInfo.sex as UserInfo_sex, 
+    UserInfo.phone as UserInfo_phone, UserInfo.registerstate as UserInfo_registerstate, 
+    UserInfo.Companyaddress as UserInfo_Companyaddress, UserInfo.Companyname as UserInfo_Companyname, 
+    UserInfo.Trueusername as UserInfo_Trueusername, UserInfo.registerdate as UserInfo_registerdate, 
+    UserInfo.loginleftdate as UserInfo_loginleftdate, UserInfo.checkdate as UserInfo_checkdate, 
+    UserInfo.operationdate as UserInfo_operationdate, UserInfo.channelid as UserInfo_channelid, 
+    UserInfo.longitude as UserInfo_longitude, UserInfo.latitude as UserInfo_latitude, 
+    UserInfo.terminalstate as UserInfo_terminalstate, UserInfo.push_statr_supporters as UserInfo_push_statr_supporters, 
+    UserInfo.push_music as UserInfo_push_music, UserInfo.push_start_invoice as UserInfo_push_start_invoice, 
+    UserInfo.days as UserInfo_days, UserInfo.qiandaotime as UserInfo_qiandaotime, UserInfo.userexplain as UserInfo_userexplain, 
+    UserInfo.photourl as UserInfo_photourl, UserInfo.publicity as UserInfo_publicity, 
+    UserInfo.area as UserInfo_area, UserInfo.adver as UserInfo_adver, UserInfo.iosver as UserInfo_iosver, 
+    UserInfo.plat as UserInfo_plat, UserInfo.score as UserInfo_score, UserInfo.sumdays as UserInfo_sumdays, 
+    UserInfo.sharenum as UserInfo_sharenum, UserInfo.sharetime as UserInfo_sharetime, 
+    UserInfo.grouptime as UserInfo_grouptime, UserInfo.authenticationStatus as UserInfo_authenticationStatus, 
+    UserInfo.useridentity as UserInfo_useridentity, UserInfo.totalSharetimes as UserInfo_totalSharetimes, 
+    UserInfo.sharetimes as UserInfo_sharetimes, UserInfo.lastSharetime as UserInfo_lastSharetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.brave.system.entity.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from userinfo UserInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.brave.system.entity.UserInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo UserInfo
+    where UserInfo.id = #{id,jdbcType=VARCHAR}
+      and UserInfo.username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.brave.system.entity.UserInfoKey" >
+    delete from userinfo
+    where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.brave.system.entity.UserInfoExample" >
+    delete from userinfo UserInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.brave.system.entity.UserInfo" >
+    insert into userinfo (id, username, hxid, 
+      password, state, sex, 
+      phone, registerstate, Companyaddress, 
+      Companyname, Trueusername, registerdate, 
+      loginleftdate, checkdate, operationdate, 
+      channelid, longitude, latitude, 
+      terminalstate, push_statr_supporters, push_music, 
+      push_start_invoice, days, qiandaotime, 
+      userexplain, photourl, publicity, 
+      area, adver, iosver, 
+      plat, score, sumdays, 
+      sharenum, sharetime, grouptime, 
+      authenticationStatus, useridentity, totalSharetimes, 
+      sharetimes, lastSharetime)
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{hxid,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{registerstate,jdbcType=VARCHAR}, #{companyaddress,jdbcType=VARCHAR}, 
+      #{companyname,jdbcType=VARCHAR}, #{trueusername,jdbcType=VARCHAR}, #{registerdate,jdbcType=VARCHAR}, 
+      #{loginleftdate,jdbcType=VARCHAR}, #{checkdate,jdbcType=VARCHAR}, #{operationdate,jdbcType=VARCHAR}, 
+      #{channelid,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{terminalstate,jdbcType=VARCHAR}, #{pushStatrSupporters,jdbcType=VARCHAR}, #{pushMusic,jdbcType=VARCHAR}, 
+      #{pushStartInvoice,jdbcType=VARCHAR}, #{days,jdbcType=VARCHAR}, #{qiandaotime,jdbcType=VARCHAR}, 
+      #{userexplain,jdbcType=VARCHAR}, #{photourl,jdbcType=VARCHAR}, #{publicity,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{adver,jdbcType=VARCHAR}, #{iosver,jdbcType=VARCHAR}, 
+      #{plat,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{sumdays,jdbcType=VARCHAR}, 
+      #{sharenum,jdbcType=VARCHAR}, #{sharetime,jdbcType=VARCHAR}, #{grouptime,jdbcType=VARCHAR}, 
+      #{authenticationstatus,jdbcType=VARCHAR}, #{useridentity,jdbcType=VARCHAR}, #{totalsharetimes,jdbcType=VARCHAR}, 
+      #{sharetimes,jdbcType=VARCHAR}, #{lastsharetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.brave.system.entity.UserInfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="hxid != null" >
+        hxid,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="registerstate != null" >
+        registerstate,
+      </if>
+      <if test="companyaddress != null" >
+        Companyaddress,
+      </if>
+      <if test="companyname != null" >
+        Companyname,
+      </if>
+      <if test="trueusername != null" >
+        Trueusername,
+      </if>
+      <if test="registerdate != null" >
+        registerdate,
+      </if>
+      <if test="loginleftdate != null" >
+        loginleftdate,
+      </if>
+      <if test="checkdate != null" >
+        checkdate,
+      </if>
+      <if test="operationdate != null" >
+        operationdate,
+      </if>
+      <if test="channelid != null" >
+        channelid,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="terminalstate != null" >
+        terminalstate,
+      </if>
+      <if test="pushStatrSupporters != null" >
+        push_statr_supporters,
+      </if>
+      <if test="pushMusic != null" >
+        push_music,
+      </if>
+      <if test="pushStartInvoice != null" >
+        push_start_invoice,
+      </if>
+      <if test="days != null" >
+        days,
+      </if>
+      <if test="qiandaotime != null" >
+        qiandaotime,
+      </if>
+      <if test="userexplain != null" >
+        userexplain,
+      </if>
+      <if test="photourl != null" >
+        photourl,
+      </if>
+      <if test="publicity != null" >
+        publicity,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="adver != null" >
+        adver,
+      </if>
+      <if test="iosver != null" >
+        iosver,
+      </if>
+      <if test="plat != null" >
+        plat,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="sumdays != null" >
+        sumdays,
+      </if>
+      <if test="sharenum != null" >
+        sharenum,
+      </if>
+      <if test="sharetime != null" >
+        sharetime,
+      </if>
+      <if test="grouptime != null" >
+        grouptime,
+      </if>
+      <if test="authenticationstatus != null" >
+        authenticationStatus,
+      </if>
+      <if test="useridentity != null" >
+        useridentity,
+      </if>
+      <if test="totalsharetimes != null" >
+        totalSharetimes,
+      </if>
+      <if test="sharetimes != null" >
+        sharetimes,
+      </if>
+      <if test="lastsharetime != null" >
+        lastSharetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="hxid != null" >
+        #{hxid,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="registerstate != null" >
+        #{registerstate,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null" >
+        #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="trueusername != null" >
+        #{trueusername,jdbcType=VARCHAR},
+      </if>
+      <if test="registerdate != null" >
+        #{registerdate,jdbcType=VARCHAR},
+      </if>
+      <if test="loginleftdate != null" >
+        #{loginleftdate,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null" >
+        #{checkdate,jdbcType=VARCHAR},
+      </if>
+      <if test="operationdate != null" >
+        #{operationdate,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null" >
+        #{channelid,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalstate != null" >
+        #{terminalstate,jdbcType=VARCHAR},
+      </if>
+      <if test="pushStatrSupporters != null" >
+        #{pushStatrSupporters,jdbcType=VARCHAR},
+      </if>
+      <if test="pushMusic != null" >
+        #{pushMusic,jdbcType=VARCHAR},
+      </if>
+      <if test="pushStartInvoice != null" >
+        #{pushStartInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        #{days,jdbcType=VARCHAR},
+      </if>
+      <if test="qiandaotime != null" >
+        #{qiandaotime,jdbcType=VARCHAR},
+      </if>
+      <if test="userexplain != null" >
+        #{userexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="photourl != null" >
+        #{photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="publicity != null" >
+        #{publicity,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="adver != null" >
+        #{adver,jdbcType=VARCHAR},
+      </if>
+      <if test="iosver != null" >
+        #{iosver,jdbcType=VARCHAR},
+      </if>
+      <if test="plat != null" >
+        #{plat,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="sumdays != null" >
+        #{sumdays,jdbcType=VARCHAR},
+      </if>
+      <if test="sharenum != null" >
+        #{sharenum,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetime != null" >
+        #{sharetime,jdbcType=VARCHAR},
+      </if>
+      <if test="grouptime != null" >
+        #{grouptime,jdbcType=VARCHAR},
+      </if>
+      <if test="authenticationstatus != null" >
+        #{authenticationstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="useridentity != null" >
+        #{useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="totalsharetimes != null" >
+        #{totalsharetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetimes != null" >
+        #{sharetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="lastsharetime != null" >
+        #{lastsharetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.brave.system.entity.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from userinfo UserInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userinfo UserInfo
+    <set >
+      <if test="record.id != null" >
+        UserInfo.id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        UserInfo.username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hxid != null" >
+        UserInfo.hxid = #{record.hxid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        UserInfo.password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        UserInfo.state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        UserInfo.sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        UserInfo.phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerstate != null" >
+        UserInfo.registerstate = #{record.registerstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyaddress != null" >
+        UserInfo.Companyaddress = #{record.companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyname != null" >
+        UserInfo.Companyname = #{record.companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trueusername != null" >
+        UserInfo.Trueusername = #{record.trueusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerdate != null" >
+        UserInfo.registerdate = #{record.registerdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginleftdate != null" >
+        UserInfo.loginleftdate = #{record.loginleftdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkdate != null" >
+        UserInfo.checkdate = #{record.checkdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationdate != null" >
+        UserInfo.operationdate = #{record.operationdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelid != null" >
+        UserInfo.channelid = #{record.channelid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        UserInfo.longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        UserInfo.latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.terminalstate != null" >
+        UserInfo.terminalstate = #{record.terminalstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushStatrSupporters != null" >
+        UserInfo.push_statr_supporters = #{record.pushStatrSupporters,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushMusic != null" >
+        UserInfo.push_music = #{record.pushMusic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushStartInvoice != null" >
+        UserInfo.push_start_invoice = #{record.pushStartInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.days != null" >
+        UserInfo.days = #{record.days,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qiandaotime != null" >
+        UserInfo.qiandaotime = #{record.qiandaotime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userexplain != null" >
+        UserInfo.userexplain = #{record.userexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photourl != null" >
+        UserInfo.photourl = #{record.photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publicity != null" >
+        UserInfo.publicity = #{record.publicity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        UserInfo.area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adver != null" >
+        UserInfo.adver = #{record.adver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iosver != null" >
+        UserInfo.iosver = #{record.iosver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plat != null" >
+        UserInfo.plat = #{record.plat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        UserInfo.score = #{record.score,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sumdays != null" >
+        UserInfo.sumdays = #{record.sumdays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sharenum != null" >
+        UserInfo.sharenum = #{record.sharenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sharetime != null" >
+        UserInfo.sharetime = #{record.sharetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grouptime != null" >
+        UserInfo.grouptime = #{record.grouptime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authenticationstatus != null" >
+        UserInfo.authenticationStatus = #{record.authenticationstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useridentity != null" >
+        UserInfo.useridentity = #{record.useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalsharetimes != null" >
+        UserInfo.totalSharetimes = #{record.totalsharetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sharetimes != null" >
+        UserInfo.sharetimes = #{record.sharetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastsharetime != null" >
+        UserInfo.lastSharetime = #{record.lastsharetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userinfo UserInfo
+    set UserInfo.id = #{record.id,jdbcType=VARCHAR},
+      UserInfo.username = #{record.username,jdbcType=VARCHAR},
+      UserInfo.hxid = #{record.hxid,jdbcType=VARCHAR},
+      UserInfo.password = #{record.password,jdbcType=VARCHAR},
+      UserInfo.state = #{record.state,jdbcType=VARCHAR},
+      UserInfo.sex = #{record.sex,jdbcType=VARCHAR},
+      UserInfo.phone = #{record.phone,jdbcType=VARCHAR},
+      UserInfo.registerstate = #{record.registerstate,jdbcType=VARCHAR},
+      UserInfo.Companyaddress = #{record.companyaddress,jdbcType=VARCHAR},
+      UserInfo.Companyname = #{record.companyname,jdbcType=VARCHAR},
+      UserInfo.Trueusername = #{record.trueusername,jdbcType=VARCHAR},
+      UserInfo.registerdate = #{record.registerdate,jdbcType=VARCHAR},
+      UserInfo.loginleftdate = #{record.loginleftdate,jdbcType=VARCHAR},
+      UserInfo.checkdate = #{record.checkdate,jdbcType=VARCHAR},
+      UserInfo.operationdate = #{record.operationdate,jdbcType=VARCHAR},
+      UserInfo.channelid = #{record.channelid,jdbcType=VARCHAR},
+      UserInfo.longitude = #{record.longitude,jdbcType=VARCHAR},
+      UserInfo.latitude = #{record.latitude,jdbcType=VARCHAR},
+      UserInfo.terminalstate = #{record.terminalstate,jdbcType=VARCHAR},
+      UserInfo.push_statr_supporters = #{record.pushStatrSupporters,jdbcType=VARCHAR},
+      UserInfo.push_music = #{record.pushMusic,jdbcType=VARCHAR},
+      UserInfo.push_start_invoice = #{record.pushStartInvoice,jdbcType=VARCHAR},
+      UserInfo.days = #{record.days,jdbcType=VARCHAR},
+      UserInfo.qiandaotime = #{record.qiandaotime,jdbcType=VARCHAR},
+      UserInfo.userexplain = #{record.userexplain,jdbcType=VARCHAR},
+      UserInfo.photourl = #{record.photourl,jdbcType=VARCHAR},
+      UserInfo.publicity = #{record.publicity,jdbcType=VARCHAR},
+      UserInfo.area = #{record.area,jdbcType=VARCHAR},
+      UserInfo.adver = #{record.adver,jdbcType=VARCHAR},
+      UserInfo.iosver = #{record.iosver,jdbcType=VARCHAR},
+      UserInfo.plat = #{record.plat,jdbcType=VARCHAR},
+      UserInfo.score = #{record.score,jdbcType=VARCHAR},
+      UserInfo.sumdays = #{record.sumdays,jdbcType=VARCHAR},
+      UserInfo.sharenum = #{record.sharenum,jdbcType=VARCHAR},
+      UserInfo.sharetime = #{record.sharetime,jdbcType=VARCHAR},
+      UserInfo.grouptime = #{record.grouptime,jdbcType=VARCHAR},
+      UserInfo.authenticationStatus = #{record.authenticationstatus,jdbcType=VARCHAR},
+      UserInfo.useridentity = #{record.useridentity,jdbcType=VARCHAR},
+      UserInfo.totalSharetimes = #{record.totalsharetimes,jdbcType=VARCHAR},
+      UserInfo.sharetimes = #{record.sharetimes,jdbcType=VARCHAR},
+      UserInfo.lastSharetime = #{record.lastsharetime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.brave.system.entity.UserInfo" >
+    update userinfo
+    <set >
+      <if test="hxid != null" >
+        hxid = #{hxid,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="registerstate != null" >
+        registerstate = #{registerstate,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null" >
+        Companyaddress = #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        Companyname = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="trueusername != null" >
+        Trueusername = #{trueusername,jdbcType=VARCHAR},
+      </if>
+      <if test="registerdate != null" >
+        registerdate = #{registerdate,jdbcType=VARCHAR},
+      </if>
+      <if test="loginleftdate != null" >
+        loginleftdate = #{loginleftdate,jdbcType=VARCHAR},
+      </if>
+      <if test="checkdate != null" >
+        checkdate = #{checkdate,jdbcType=VARCHAR},
+      </if>
+      <if test="operationdate != null" >
+        operationdate = #{operationdate,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null" >
+        channelid = #{channelid,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalstate != null" >
+        terminalstate = #{terminalstate,jdbcType=VARCHAR},
+      </if>
+      <if test="pushStatrSupporters != null" >
+        push_statr_supporters = #{pushStatrSupporters,jdbcType=VARCHAR},
+      </if>
+      <if test="pushMusic != null" >
+        push_music = #{pushMusic,jdbcType=VARCHAR},
+      </if>
+      <if test="pushStartInvoice != null" >
+        push_start_invoice = #{pushStartInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        days = #{days,jdbcType=VARCHAR},
+      </if>
+      <if test="qiandaotime != null" >
+        qiandaotime = #{qiandaotime,jdbcType=VARCHAR},
+      </if>
+      <if test="userexplain != null" >
+        userexplain = #{userexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="photourl != null" >
+        photourl = #{photourl,jdbcType=VARCHAR},
+      </if>
+      <if test="publicity != null" >
+        publicity = #{publicity,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="adver != null" >
+        adver = #{adver,jdbcType=VARCHAR},
+      </if>
+      <if test="iosver != null" >
+        iosver = #{iosver,jdbcType=VARCHAR},
+      </if>
+      <if test="plat != null" >
+        plat = #{plat,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="sumdays != null" >
+        sumdays = #{sumdays,jdbcType=VARCHAR},
+      </if>
+      <if test="sharenum != null" >
+        sharenum = #{sharenum,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetime != null" >
+        sharetime = #{sharetime,jdbcType=VARCHAR},
+      </if>
+      <if test="grouptime != null" >
+        grouptime = #{grouptime,jdbcType=VARCHAR},
+      </if>
+      <if test="authenticationstatus != null" >
+        authenticationStatus = #{authenticationstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="useridentity != null" >
+        useridentity = #{useridentity,jdbcType=VARCHAR},
+      </if>
+      <if test="totalsharetimes != null" >
+        totalSharetimes = #{totalsharetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetimes != null" >
+        sharetimes = #{sharetimes,jdbcType=VARCHAR},
+      </if>
+      <if test="lastsharetime != null" >
+        lastSharetime = #{lastsharetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.brave.system.entity.UserInfo" >
+    update userinfo
+    set hxid = #{hxid,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      registerstate = #{registerstate,jdbcType=VARCHAR},
+      Companyaddress = #{companyaddress,jdbcType=VARCHAR},
+      Companyname = #{companyname,jdbcType=VARCHAR},
+      Trueusername = #{trueusername,jdbcType=VARCHAR},
+      registerdate = #{registerdate,jdbcType=VARCHAR},
+      loginleftdate = #{loginleftdate,jdbcType=VARCHAR},
+      checkdate = #{checkdate,jdbcType=VARCHAR},
+      operationdate = #{operationdate,jdbcType=VARCHAR},
+      channelid = #{channelid,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      terminalstate = #{terminalstate,jdbcType=VARCHAR},
+      push_statr_supporters = #{pushStatrSupporters,jdbcType=VARCHAR},
+      push_music = #{pushMusic,jdbcType=VARCHAR},
+      push_start_invoice = #{pushStartInvoice,jdbcType=VARCHAR},
+      days = #{days,jdbcType=VARCHAR},
+      qiandaotime = #{qiandaotime,jdbcType=VARCHAR},
+      userexplain = #{userexplain,jdbcType=VARCHAR},
+      photourl = #{photourl,jdbcType=VARCHAR},
+      publicity = #{publicity,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      adver = #{adver,jdbcType=VARCHAR},
+      iosver = #{iosver,jdbcType=VARCHAR},
+      plat = #{plat,jdbcType=VARCHAR},
+      score = #{score,jdbcType=VARCHAR},
+      sumdays = #{sumdays,jdbcType=VARCHAR},
+      sharenum = #{sharenum,jdbcType=VARCHAR},
+      sharetime = #{sharetime,jdbcType=VARCHAR},
+      grouptime = #{grouptime,jdbcType=VARCHAR},
+      authenticationStatus = #{authenticationstatus,jdbcType=VARCHAR},
+      useridentity = #{useridentity,jdbcType=VARCHAR},
+      totalSharetimes = #{totalsharetimes,jdbcType=VARCHAR},
+      sharetimes = #{sharetimes,jdbcType=VARCHAR},
+      lastSharetime = #{lastsharetime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
+  </update>
+  <select id="userinfo2d" parameterType="map" resultType="map">
+    SELECT count(1) value, DATE_FORMAT(registerdate, '%Y-%m-%d') label FROM userinfo
+    WHERE registerdate BETWEEN CONCAT(#{param.beginDate}, ' 00:00:00') AND CONCAT(#{param.endDate}, ' 23:59:59')
+    GROUP BY DATE_FORMAT(registerdate, '%Y-%m-%d')
+  </select>
+  <select id="userinfopiePlat" parameterType="map" resultType="map">
+    SELECT count(1) value,
+      <if test='param.property == "plat"'>
+        CASE plat WHEN 'ios' THEN 'IOS'
+        WHEN 'ad' THEN '安卓'
+        ELSE '其他' END
+      </if>
+      <if test='param.property == "useridentity"'>
+        useridentity
+      </if>
+      <if test='param.property == "area"'>
+        area
+      </if>
+      <if test='param.property == "sex"'>
+        sex
+      </if>
+      <if test='param.property == "state"'>
+        CASE state WHEN '1' THEN '管理员'
+        WHEN '0' THEN '普通用户'
+        ELSE '其他' END
+      </if>
+    label FROM userinfo
+    WHERE registerdate BETWEEN CONCAT(#{param.beginDate}, ' 00:00:00') AND CONCAT(#{param.endDate}, ' 23:59:59')
+    <if test='param.property == "plat"'>
+      GROUP BY plat
+    </if>
+    <if test='param.property == "useridentity"'>
+      GROUP BY useridentity
+    </if>
+    <if test='param.property == "area"'>
+      GROUP BY area
+    </if>
+    <if test='param.property == "sex"'>
+      GROUP BY sex
+    </if>
+    <if test='param.property == "state"'>
+      GROUP BY state
+    </if>
+
+  </select>
+  <select id="userinfopieAllCount" parameterType="map" resultType="int">
+    SELECT COUNT(1) value FROM userinfo
+    WHERE registerdate BETWEEN CONCAT(#{param.beginDate}, ' 00:00:00') AND CONCAT(#{param.endDate}, ' 23:59:59')
+  </select>
+</mapper>

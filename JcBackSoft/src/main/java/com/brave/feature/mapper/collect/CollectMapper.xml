@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- 此处请注意命名空间的唯一性 -->
+<mapper namespace="com.brave.feature.mapper.collect.CollectMapper">
+	<!-- 插入票源信息操作 -->
+	<insert id="insertCollect" parameterType="map">
+		Insert INTO collect
+		(bankpoce,bank,type,money,duedate,linkman,phone,
+			supportersid,remark,endorsement,username,issuetime,
+			piaonum,jingdu,weidu,zhangshu
+		)VALUES(
+			#{param.Bankpoce}, #{param.Bank}, #{param.Type}, #{param.Money}, #{param.Dudate},
+			#{param.Linkman}, #{param.PHONE}, #{param.Supportersid}, #{param.Remark},
+			#{param.Endorsement}, #{param.Username}, #{param.Issuetime}, #{param.Piaonum},
+			#{param.Jingdu}, #{param.Weidu}, #{param.Zhangshu})
+	</insert>
+
+	<!-- 根据用户名查询收藏表中的信息(我的选项卡中) -->
+	<select id="selectCollectByUsername" parameterType="string"
+		resultType="map">
+		SELECT * FROM collect WHERE username = #{Username} 
+	</select>
+
+	<!-- 修改收藏表中用户的电话号码 -->
+	<update id="updateCollectPhone" parameterType="map">
+		UPDATE collect SET phone = #{param.Phone} Where linkman = #{param.Linkman}
+	</update>
+
+	<!-- 根据登录时输入id对收藏表进行删除操作 -->
+	<delete id="deleteCollectById" parameterType="map">
+		DELETE FROM collect WHERE supportersid= #{param.SupportersId}
+	</delete>
+
+	<delete id="deleteCollectByIdUsername" parameterType="map">
+		DELETE FROM collect WHERE supportersid= #{param.Supportersid} and username = #{param.Username}
+	</delete>
+
+	<!-- bbb查询相应的 -->
+	<select id="selectCollectById" parameterType="map" resultType="map">
+		SELECT * FROM collect WHERE supportersid = #{param.Supportersid} and username= #{param.Username}
+	</select>
+</mapper>
